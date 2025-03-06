@@ -1,0 +1,56 @@
+<!-- templates/faq.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - MindCare Mental Health Companion</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        .gradient-background {
+            background: linear-gradient(180deg, #1a1a1a 0%, #2d1b4d 100%);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-background">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-white text-xl font-semibold">
+                <a href="/">MindCare Mental Health Companion</a>
+            </div>
+            <div class="space-x-6">
+                <a href="{{ url_for('about') }}" class="text-white hover:text-gray-300">ABOUT</a>
+                <a href="{{ url_for('faq') }}" class="text-white hover:text-gray-300">FAQ</a>
+            </div>
+        </nav>
+
+        <main class="container mx-auto px-4 text-center flex flex-col items-center justify-center min-h-[80vh]">
+            <h1 class="text-white text-5xl font-bold mb-8">
+                Frequently Asked Questions
+            </h1>
+            
+            <p class="text-white text-lg mb-8">
+                Here are some common questions we receive:
+            </p>
+
+            <div class="text-left max-w-2xl w-full">
+                <div class="mb-8">
+                    <h2 class="text-white text-xl font-semibold mb-2">Q: Is MindCare a replacement for therapy?</h2>
+                    <p class="text-white">A: No, MindCare is not a replacement for therapy. It's a tool that helps users explore available mental health resources and connect with professionals if necessary.</p>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="text-white text-xl font-semibold mb-2">Q: Is my privacy protected when using MindCare?</h2>
+                    <p class="text-white">A: Yes, we prioritize your privacy. MindCare offers anonymous login options to protect your identity.</p>
+                </div>
+                
+                <div class="mb-8">
+                    <h2 class="text-white text-xl font-semibold mb-2">Q: What kind of resources does MindCare provide?</h2>
+                    <p class="text-white">A: MindCare provides access to mental health resources, guided journaling, mood tracking, and connections to professional help when needed.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
