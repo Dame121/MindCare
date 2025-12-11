@@ -1,0 +1,41 @@
+<!-- templates/about.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About MindCare - Mental Health Companion</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        .gradient-background {
+            background: linear-gradient(180deg, #1a1a1a 0%, #2d1b4d 100%);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-background">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-white text-xl font-semibold">
+                <a href="/">MindCare Mental Health Companion</a>
+            </div>
+            <div class="space-x-6">
+                <a href="{{ url_for('about') }}" class="text-white hover:text-gray-300">ABOUT</a>
+                <a href="{{ url_for('faq') }}" class="text-white hover:text-gray-300">FAQ</a>
+            </div>
+        </nav>
+
+        <main class="container mx-auto px-4 text-center flex flex-col items-center justify-center min-h-[80vh]">
+            <h1 class="text-white text-5xl font-bold mb-8">
+                About MindCare Mental Health Companion
+            </h1>
+            
+            <p class="text-white text-lg max-w-2xl mb-12">
+                MindCare is a mental health companion designed to provide resources and guidance to manage 
+                stress and improve well-being. We aim to connect users with trusted mental health tools, 
+                professionals, and resources while respecting privacy and confidentiality.
+            </p>
+        </main>
+    </div>
+</body>
+</html>

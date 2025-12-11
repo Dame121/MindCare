@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        .dashboard-header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .brand-icon {
+            color: #2563eb;
+            font-size: 2rem;
+        }
+        
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .notification-btn {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            transition: background-color 0.2s;
+        }
+        
+        .notification-btn:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .user-avatar {
+            width: 2rem;
+            height: 2rem;
+            background-color: #2563eb;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+        }
+        
+        .nav-tabs {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            padding: 1rem;
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+        
+        .nav-link.active {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+        
+        .nav-link:not(.active):hover {
+            background-color: #f3f4f6;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background-color: #f0f9ff;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .stat-card h3 {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #1f2937;
+        }
+        
+        .stat-value {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: #2563eb;
+            margin-top: 0.5rem;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+        
+        .action-btn:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .action-icon {
+            width: 3rem;
+            height: 3rem;
+            background-color: #dbeafe;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+        }
+
+        .nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: none;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4b5563;
+    transition: all 0.2s;
+    border-radius: 0.5rem;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: #f3f4f6;
+    color: #2563eb;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #dbeafe;
+    color: #2563eb;
+    font-weight: 500;
+}
+
+.tab-content {
+    margin-top: 1rem;
+}
+
+.tab-pane {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+/* Additional CSS for the Mood Tracker Tab */
+.dashboard-card {
+    background-color: #f9fafb;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+/* Card styling */
+.card {
+    border-radius: 0.75rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* Chart container */
+.chart-container {
+    transition: opacity 0.3s ease;
+}
+
+/* Time period buttons */
+.time-period-btn {
+    border-radius: 20px;
+    padding: 0.375rem 1rem;
+    font-weight: 500;
+}
+
+.time-period-btn.active {
+    background-color: #2563eb;
+    color: white;
+    box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+}
+
+/* Stats cards with icons */
+.bg-primary.bg-opacity-10 {
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+.bg-success.bg-opacity-10 {
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.bg-warning.bg-opacity-10 {
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+.bg-info.bg-opacity-10 {
+    background-color: rgba(6, 182, 212, 0.1);
+}
+
+/* Modal styling */
+.modal-content {
+    border: none;
+    border-radius: 0.75rem;
+}
+
+.modal-header {
+    border-bottom-color: #f3f4f6;
+}
+
+.modal-footer {
+    border-top-color: #f3f4f6;
+}
+
+/* Loading and placeholder styles */
+.placeholder-glow .placeholder {
+    background-color: #e5e7eb;
+}
+
+/* Cursor pointer for clickable elements */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Responsive fixes */
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .time-period-btn {
+        font-size: 0.875rem;
+        padding: 0.25rem 0.75rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-container">
+            <!-- Brand Section (Left side) -->
+            <div class="brand">
+                <i class="bi bi-heart-fill brand-icon"></i>
+                <h1 class="brand-name">MindCare</h1>
+            </div>
+            
+            <!-- User Section (Right side) -->
+            <div class="user-section">
+                <!-- User Avatar and Name -->
+                <div class="user-avatar" aria-label="User avatar">
+                    {{ user.name[:2].upper() }}
+                </div>
+                <span class="user-name">{{ user.name }}</span>
+                
+                <!-- Logout Button -->
+                <a href="/logout" class="btn btn-outline-danger btn-sm ms-2">Logout</a>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container py-3">
+        <div class="nav-tabs" id="dashboardTabs" role="tablist">
+            <!-- Profile Tab -->
+            <button class="nav-link {% if not active_tab or active_tab == 'profile' %}active{% endif %}"
+                    id="profile-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#profile"
+                    type="button"
+                    role="tab"
+                    aria-controls="profile"
+                    aria-selected="{% if not active_tab or active_tab == 'profile' %}true{% else %}false{% endif %}">
+                <i class="bi bi-person"></i>
+                <span>Profile Details</span>
+            </button>
+    
+            <!-- MindChat Tab -->
+            <button class="nav-link {% if active_tab == 'mindchat' %}active{% endif %}"
+                    id="mindchat-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#mindchat"
+                    type="button"
+                    role="tab"
+                    aria-controls="mindchat"
+                    aria-selected="{% if active_tab == 'mindchat' %}true{% else %}false{% endif %}">
+                <i class="bi bi-chat-dots"></i>
+                <span>MindChat</span>
+            </button>
+    
+            <!-- YouTube Tab -->
+            <button class="nav-link {% if active_tab == 'youtube' %}active{% endif %}"
+                    id="youtube-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#youtube"
+                    type="button"
+                    role="tab"
+                    aria-controls="youtube"
+                    aria-selected="{% if active_tab == 'youtube' %}true{% else %}false{% endif %}">
+                <i class="bi bi-youtube"></i>
+                <span>Video Library</span>
+            </button>
+    
+            <!-- Analyzer Tab -->
+            <button class="nav-link {% if active_tab == 'analyzer' %}active{% endif %}"
+                    id="analyzer-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#analyzer"
+                    type="button"
+                    role="tab"
+                    aria-controls="analyzer"
+                    aria-selected="{% if active_tab == 'analyzer' %}true{% else %}false{% endif %}">
+                <i class="bi bi-graph-up"></i>
+                <span>Mood Analyzer</span>
+            </button>
+    
+            <!-- Gratitude Tab -->
+            <button class="nav-link {% if active_tab == 'gratitude' %}active{% endif %}"
+                    id="gratitude-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#gratitude"
+                    type="button"
+                    role="tab"
+                    aria-controls="gratitude"
+                    aria-selected="{% if active_tab == 'gratitude' %}true{% else %}false{% endif %}">
+                <i class="bi bi-journal-text"></i>
+                <span>Gratitude Journal</span>
+            </button>
+    
+            <!-- Meditation Tab -->
+            <button class="nav-link {% if active_tab == 'meditation' %}active{% endif %}"
+                    id="meditation-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#meditation"
+                    type="button"
+                    role="tab"
+                    aria-controls="meditation"
+                    aria-selected="{% if active_tab == 'meditation' %}true{% else %}false{% endif %}">
+                <i class="bi bi-moon"></i>
+                <span>Meditation Guide</span>
+            </button>
+            <!-- Mood Tracker Tab Button -->
+            <button class="nav-link {% if active_tab == 'mood_tracker' %}active{% endif %}"
+                id="mood_tracker-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#mood_tracker"
+                type="button"
+                role="tab"
+                aria-controls="mood_tracker"
+                aria-selected="{% if active_tab == 'mood_tracker' %}true{% else %}false{% endif %}">
+                <i class="bi bi-bar-chart-line"></i>
+                <span>Mood Tracker</span>
+            </button>
+
+        </div>
+    </div>
+    
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+        <!-- Profile Details Tab -->
+        <div class="tab-pane fade {% if not active_tab or active_tab == 'profile' %}show active{% endif %}" 
+             id="profile" 
+             role="tabpanel" 
+             aria-labelledby="profile-tab">
+            <div class="dashboard-card">
+                <h2 class="text-center mb-4">User Profile</h2>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Name:</strong> {{ user.name }}</li>
+                    <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+                    <li class="list-group-item"><strong>Username:</strong> {{ user.username }}</li>
+                    <li class="list-group-item"><strong>Age:</strong> {{ user.age }}</li>
+                    <li class="list-group-item"><strong>Gender:</strong> {{ user.gender }}</li>
+                    <li class="list-group-item"><strong>Residence:</strong> {{ user.residence }}</li>
+                    <li class="list-group-item"><strong>Field:</strong> {{ user.field }}</li>
+                </ul>
+                <div class="text-center mt-4">
+                    <a href="/logout" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- MindChat Tab -->
+<div class="tab-pane fade {% if active_tab == 'mindchat' %}show active{% endif %}" 
+id="mindchat" 
+role="tabpanel" 
+aria-labelledby="mindchat-tab">
+<div class="dashboard-card">
+   <h2 class="text-center">MindChat</h2>
+   <div id="chat-box" class="border rounded p-3 mb-3" style="height: 400px; overflow-y: auto;"></div>
+   <div class="input-group">
+       <textarea id="user-input" class="form-control" placeholder="Type your message..." rows="2"></textarea>
+       <button id="send-btn" class="btn btn-primary">Send</button>
+   </div>
+</div>
+</div>
+
+        <!-- YouTube Recommendations Tab -->
+        <div class="tab-pane fade {% if active_tab == 'youtube' %}show active{% endif %}" 
+             id="youtube" 
+             role="tabpanel" 
+             aria-labelledby="youtube-tab">
+            <div class="dashboard-card">
+                <h2 class="text-center mb-4">YouTube Videos Recommendations</h2>
+                
+                <!-- Search Form -->
+                <form action="{{ url_for('youtube_recommendations') }}" method="POST" class="mb-4">
+                    <input type="hidden" name="active_tab" value="youtube">
+                    <div class="input-group">
+                        <input type="text" name="query" class="form-control" value="{{ query }}" placeholder="Search for mental health videos...">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+
+                <!-- Video Results -->
+                <div class="row">
+                    {% if videos %}
+                        {% for video in videos %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="{{ video.thumbnail }}" class="card-img-top" alt="{{ video.title }}" style="height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="font-size: 1rem;">{{ video.title }}</h5>
+                                    <p class="card-text small">{{ video.description[:100] }}...</p>
+                                    <a href="https://www.youtube.com/watch?v={{ video.video_id }}" 
+                                       class="btn btn-primary btn-sm w-100"
+                                       target="_blank">Watch Video</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-12 text-center">
+                            <p>Loading videos... If no videos appear, try refreshing the page.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- Add this after the YouTube tab content -->
+<!-- Analyzer Tab -->
+<div class="tab-pane fade {% if active_tab == 'analyzer' %}show active{% endif %}" 
+     id="analyzer" 
+     role="tabpanel" 
+     aria-labelledby="analyzer-tab">
+    <div class="dashboard-card">
+        <div class="text-center mb-4">
+            <h2 class="text-center mb-4">Mental Health Analyzer</h2>
+            <hr class="my-3">
+        </div>
+        <div class="row">
+            <div class="col-md-8 mx-auto mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Journal Entry</h5>
+                        <textarea id="journal-text" class="form-control mb-3" rows="6" 
+                                placeholder="Write about your day, feelings, or anything on your mind..."></textarea>
+                        <button id="analyze-text" class="btn btn-primary w-100">Analyze Journal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Analysis Results</h5>
+                <div id="analysis-results" class="mt-3">
+                    <!-- Results will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Gratitude journal tab -->
+<!-- Add this to your dashboard.html inside the gratitude tab -->
+<div class="tab-pane fade {% if active_tab == 'gratitude' %}show active{% endif %}" 
+     id="gratitude" 
+     role="tabpanel" 
+     aria-labelledby="gratitude-tab">
+    <div class="dashboard-card">
+        <h2 class="text-center mb-4">Gratitude Journal</h2>
+        
+        <!-- Filters -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Filter Entries</h5>
+                <form id="filter-form" class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-control" name="start_date">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-control" name="end_date">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Mood</label>
+                        <select class="form-control" name="mood">
+                            <option value="">All</option>
+                            <option value="Happy">Happy</option>
+                            <option value="Grateful">Grateful</option>
+                            <option value="Blessed">Blessed</option>
+                            <option value="Content">Content</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Apply Filters</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Entry Form -->
+        <form action="{{ url_for('gratitude') }}" method="POST" class="mb-4">
+            <div class="form-group mb-3">
+                <label for="content">What are you grateful for today?</label>
+                <textarea name="content" id="content" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="form-group mb-3">
+                <label for="mood">How do you feel?</label>
+                <select name="mood" id="mood" class="form-control" required>
+                    <option value="Happy">Happy</option>
+                    <option value="Grateful">Grateful</option>
+                    <option value="Blessed">Blessed</option>
+                    <option value="Content">Content</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Entry</button>
+        </form>
+
+        <!-- Past Entries -->
+        <h3 class="mt-4">Past Entries</h3>
+        <div class="list-group" id="entries-list">
+            {% for entry in entries %}
+            <div class="list-group-item" id="entry-{{ entry.id }}">
+                <div class="d-flex w-100 justify-content-between align-items-center">
+                    <h5 class="mb-1">{{ entry.date_created.strftime('%B %d, %Y') }}</h5>
+                    <div>
+                        <span class="badge bg-primary">{{ entry.mood }}</span>
+                        <button class="btn btn-sm btn-outline-primary edit-entry" data-entry-id="{{ entry.id }}">
+                            Edit
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger delete-entry" data-entry-id="{{ entry.id }}">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+                <p class="mb-1 entry-content">{{ entry.content }}</p>
+                {% if entry.last_modified %}
+                <small class="text-muted">Last modified: {{ entry.last_modified.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Add this modal for editing entries -->
+<div class="modal fade" id="editEntryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Entry</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-entry-form">
+                    <div class="form-group mb-3">
+                        <label for="edit-content">Content</label>
+                        <textarea id="edit-content" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="edit-mood">Mood</label>
+                        <select id="edit-mood" class="form-control" required>
+                            <option value="Happy">Happy</option>
+                            <option value="Grateful">Grateful</option>
+                            <option value="Blessed">Blessed</option>
+                            <option value="Content">Content</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save-edit">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Replace the existing meditation tab content with this -->
+<div class="tab-pane fade {% if active_tab == 'meditation' %}show active{% endif %}" 
+     id="meditation" 
+     role="tabpanel" 
+     aria-labelledby="meditation-tab">
+    <div id="meditation-container" class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <!-- Header Section -->
+                <div class="text-center mb-4">
+                    <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
+                        <i class="bi bi-moon-stars fs-3 text-primary"></i>
+                        <h2 class="mb-0">Mindful Meditation Guide</h2>
+                    </div>
+                    <p class="text-muted">Take a moment to breathe and find your center</p>
+                </div>
+                
+                <!-- Breathing Visual Section -->
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-body text-center p-5">
+                        <h3 id="breathing-instruction" class="h4 mb-4">Press Start</h3>
+                        <div id="breathing-visual" class="mx-auto" 
+                             style="width: 100px; height: 100px; border-radius: 50%; background-color: #e3f2fd; transition: all 0.5s ease;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timer and Controls Section -->
+                <div class="row g-4 mb-4">
+                    <!-- Time Remaining -->
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5 class="text-muted mb-3">Time Remaining</h5>
+                                <div id="timer-display" class="display-6 text-primary">00:00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Session Duration -->
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5 class="text-muted mb-3">Session Duration</h5>
+                                <select id="duration-select" class="form-select" aria-label="Select meditation duration">
+                                    <option value="300">5 Minutes</option>
+                                    <option value="600">10 Minutes</option>
+                                    <option value="900">15 Minutes</option>
+                                    <option value="1200">20 Minutes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress -->
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5 class="text-muted mb-3">Session Progress</h5>
+                                <div class="progress" style="height: 10px;">
+                                    <div id="timer-progress" class="progress-bar bg-primary" 
+                                         role="progressbar" style="width: 0%" 
+                                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="d-flex justify-content-center gap-3 mb-4">
+                    <button id="start-meditation" class="btn btn-success px-4">
+                        <i class="bi bi-play-fill me-2"></i>Start Meditation
+                    </button>
+                    <button id="pause-meditation" class="btn btn-warning px-4" disabled>
+                        <i class="bi bi-pause-fill me-2"></i>Pause
+                    </button>
+                    <button id="reset-meditation" class="btn btn-danger px-4" disabled>
+                        <i class="bi bi-stop-fill me-2"></i>Reset
+                    </button>
+                </div>
+
+                <!-- Audio Controls -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-volume-up fs-4"></i>
+                                <h5 class="mb-0">Background Sound</h5>
+                            </div>
+                        </div>
+
+                        <!-- Sound Selection -->
+                        <div class="btn-group d-flex flex-wrap justify-content-center gap-2 mb-4" role="group">
+                            <input type="radio" class="btn-check" name="sound" id="sound-none" value="none" checked>
+                            <label class="btn btn-outline-primary" for="sound-none">Silence</label>
+
+                            <input type="radio" class="btn-check" name="sound" id="sound-rain" value="rain">
+                            <label class="btn btn-outline-primary" for="sound-rain">Rain</label>
+
+                            <input type="radio" class="btn-check" name="sound" id="sound-waves" value="waves">
+                            <label class="btn btn-outline-primary" for="sound-waves">Ocean</label>
+
+                            <input type="radio" class="btn-check" name="sound" id="sound-bells" value="bells">
+                            <label class="btn btn-outline-primary" for="sound-bells">Bells</label>
+
+                            <input type="radio" class="btn-check" name="sound" id="sound-forest" value="forest">
+                            <label class="btn btn-outline-primary" for="sound-forest">Forest</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Mood Tracker Tab -->
+<!-- Mood Tracker Tab -->
+<div class="tab-pane fade {% if active_tab == 'mood_tracker' %}show active{% endif %}" 
+     id="mood_tracker" role="tabpanel" aria-labelledby="mood_tracker-tab">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <!-- Header Section -->
+                <div class="text-center mb-4">
+                    <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
+                        <i class="bi bi-bar-chart-line fs-3 text-primary"></i>
+                        <h2 class="mb-0">Mood Tracker</h2>
+                    </div>
+                    <p class="text-muted">Track and visualize your emotional well-being over time</p>
+                </div>
+
+                <!-- Time Period Selector -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Select Time Period</h5>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-outline-primary time-period-btn active" data-period="week">Past Week</button>
+                            <button class="btn btn-outline-primary time-period-btn" data-period="month">Past Month</button>
+                            <button class="btn btn-outline-primary time-period-btn" data-period="3months">Past 3 Months</button>
+                            <button class="btn btn-outline-primary time-period-btn" data-period="year">Past Year</button>
+                            <button class="btn btn-outline-primary time-period-btn" data-period="custom">Custom Range</button>
+                        </div>
+                        
+                        <!-- Custom Date Range (hidden by default) -->
+                        <div id="custom-date-range" class="mt-3" style="display: none;">
+                            <div class="row g-2">
+                                <div class="col-md-5">
+                                    <label class="form-label">Start Date</label>
+                                    <input type="date" id="custom-start-date" class="form-control">
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label">End Date</label>
+                                    <input type="date" id="custom-end-date" class="form-control">
+                                </div>
+                                <div class="col-md-2 d-flex align-items-end">
+                                    <button id="apply-custom-range" class="btn btn-primary w-100">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mood Overview Cards -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle mb-2">
+                                        <i class="bi bi-emoji-smile fs-4 text-primary"></i>
+                                    </div>
+                                    <h6 class="card-title">Most Common</h6>
+                                    <p class="fs-5 fw-bold mb-0" id="most-common-mood">Happy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="bg-success bg-opacity-10 p-3 rounded-circle mb-2">
+                                        <i class="bi bi-arrow-up-right fs-4 text-success"></i>
+                                    </div>
+                                    <h6 class="card-title">Mood Trend</h6>
+                                    <p class="fs-5 fw-bold mb-0" id="mood-trend">Improving</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="bg-warning bg-opacity-10 p-3 rounded-circle mb-2">
+                                        <i class="bi bi-calendar-check fs-4 text-warning"></i>
+                                    </div>
+                                    <h6 class="card-title">Entries</h6>
+                                    <p class="fs-5 fw-bold mb-0" id="total-entries">24</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="bg-info bg-opacity-10 p-3 rounded-circle mb-2">
+                                        <i class="bi bi-star fs-4 text-info"></i>
+                                    </div>
+                                    <h6 class="card-title">Current Streak</h6>
+                                    <p class="fs-5 fw-bold mb-0" id="current-streak">7 days</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="row g-4 mb-4">
+                    <!-- Mood Trend Chart -->
+                    <div class="col-md-8">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">Mood Trend Over Time</h5>
+                                <div class="chart-container" style="position: relative; height: 300px;">
+                                    <canvas id="moodTrendChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mood Distribution Chart -->
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">Mood Distribution</h5>
+                                <div class="chart-container" style="position: relative; height: 300px;">
+                                    <canvas id="moodDistributionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Insights Section -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">AI Mood Insights</h5>
+                            <button id="refreshInsights" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-arrow-repeat me-1"></i>Refresh Insights
+                            </button>
+                        </div>
+                        <div id="moodInsights" class="mt-3">
+                            <div class="placeholder-glow">
+                                <p class="placeholder col-7"></p>
+                                <p class="placeholder col-4"></p>
+                                <p class="placeholder col-6"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="text-center">
+                    <button class="btn btn-primary px-4 me-2" data-bs-toggle="modal" data-bs-target="#addMoodModal">
+                        <i class="bi bi-plus-circle me-2"></i>Log New Mood
+                    </button>
+                    <button class="btn btn-outline-secondary px-4" id="downloadMoodReport">
+                        <i class="bi bi-download me-2"></i>Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Mood Modal -->
+<div class="modal fade" id="addMoodModal" tabindex="-1" aria-labelledby="addMoodModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addMoodModalLabel">Log Your Mood</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="log-mood-form">
+                    <div class="mb-3">
+                        <label class="form-label">How are you feeling today?</label>
+                        <div class="d-flex justify-content-between mood-selector">
+                            <div class="mood-option text-center">
+                                <input type="radio" name="mood" id="mood-happy" value="Happy" class="d-none">
+                                <label for="mood-happy" class="d-block p-3 rounded cursor-pointer">
+                                    <i class="bi bi-emoji-smile fs-1"></i>
+                                    <div>Happy</div>
+                                </label>
+                            </div>
+                            <div class="mood-option text-center">
+                                <input type="radio" name="mood" id="mood-grateful" value="Grateful" class="d-none">
+                                <label for="mood-grateful" class="d-block p-3 rounded cursor-pointer">
+                                    <i class="bi bi-emoji-heart-eyes fs-1"></i>
+                                    <div>Grateful</div>
+                                </label>
+                            </div>
+                            <div class="mood-option text-center">
+                                <input type="radio" name="mood" id="mood-blessed" value="Blessed" class="d-none">
+                                <label for="mood-blessed" class="d-block p-3 rounded cursor-pointer">
+                                    <i class="bi bi-emoji-sunglasses fs-1"></i>
+                                    <div>Blessed</div>
+                                </label>
+                            </div>
+                            <div class="mood-option text-center">
+                                <input type="radio" name="mood" id="mood-content" value="Content" class="d-none">
+                                <label for="mood-content" class="d-block p-3 rounded cursor-pointer">
+                                    <i class="bi bi-emoji-neutral fs-1"></i>
+                                    <div>Content</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mood-notes" class="form-label">Additional notes (optional)</label>
+                        <textarea id="mood-notes" class="form-control" rows="3" placeholder="What's on your mind today?"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="save-mood">Save Mood</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+    </div>
+    
+</div>
+
+<!-- Your existing scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.querySelectorAll('.action-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const action = this.querySelector('span').textContent;
+        switch(action) {
+            case 'Start Meditation':
+                document.querySelector('#meditation-tab').click();
+                break;
+            case 'Write Journal':
+                document.querySelector('#gratitude-tab').click();
+                break;
+            case 'Chat Support':
+                document.querySelector('#mindchat-tab').click();
+                break;
+            case 'Watch Videos':
+                document.querySelector('#youtube-tab').click();
+                break;
+        }
+    });
+});
+   // Chat functionality
+const chatBox = document.getElementById('chat-box');
+const userInput = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function addMessage(message, isUser = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `mb-2 d-flex ${isUser ? 'justify-content-end' : 'justify-content-start'}`;
+    
+    const messageContent = document.createElement('div');
+    messageContent.className = `p-2 rounded ${isUser ? 'bg-primary text-white' : 'bg-light'}`;
+    messageContent.style.maxWidth = '75%';
+    messageContent.textContent = message;
+    
+    messageDiv.appendChild(messageContent);
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+async function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) return;
+
+    // Add user message
+    addMessage(message, true);
+    userInput.value = '';
+
+    try {
+        const response = await fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: message })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        addMessage(data.response);
+    } catch (error) {
+        addMessage('Sorry, I could not process your message. Please try again.');
+    }
+}
+
+// Send message on button click
+sendBtn.addEventListener('click', sendMessage);
+
+// Send message on Enter key (but allow new lines with Shift+Enter)
+userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const journalText = document.getElementById('journal-text');
+    const analyzeTextBtn = document.getElementById('analyze-text');
+    const analysisResults = document.getElementById('analysis-results');
+
+    // Text Analysis
+    analyzeTextBtn.addEventListener('click', async () => {
+        const text = journalText.value.trim();
+        if (!text) {
+            alert('Please write something in the journal first.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/analyze_text', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: text })
+            });
+
+            const data = await response.json();
+            displayResults(data);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error analyzing text. Please try again.');
+        }
+    });
+
+    function displayResults(data) {
+        const resultsHTML = `
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Mood Analysis</h6>
+                    <p class="card-text">Primary Emotion: <strong>${data.emotion}</strong></p>
+                    <p class="card-text">Stress Level: <strong>${data.stress_level}</strong></p>
+                    
+                    <h6 class="card-subtitle mb-2 mt-3 text-muted">Suggestions</h6>
+                    <ul class="list-group list-group-flush">
+                        ${data.suggestions.map(suggestion => 
+                            `<li class="list-group-item">${suggestion}</li>`
+                        ).join('')}
+                    </ul>
+                    
+                    <h6 class="card-subtitle mb-2 mt-3 text-muted">Resources</h6>
+                    <ul class="list-group list-group-flush">
+                        ${data.resources.map(resource => 
+                            `<li class="list-group-item">
+                                <a href="${resource.link}" target="_blank">${resource.title}</a>
+                            </li>`
+                        ).join('')}
+                    </ul>
+                </div>
+            </div>
+        `;
+        analysisResults.innerHTML = resultsHTML;
+    }
+});
+
+// Add this to your existing JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    const editModal = new bootstrap.Modal(document.getElementById('editEntryModal'));
+    let currentEntryId = null;
+
+    // Filter form submission
+    document.getElementById('filter-form')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const queryString = new URLSearchParams(formData).toString();
+        window.location.href = `/gratitude?${queryString}`;
+    });
+
+    // Edit entry
+    document.querySelectorAll('.edit-entry').forEach(button => {
+        button.addEventListener('click', function() {
+            currentEntryId = this.dataset.entryId;
+            const entryElement = document.getElementById(`entry-${currentEntryId}`);
+            document.getElementById('edit-content').value = 
+                entryElement.querySelector('.entry-content').textContent.trim();
+            document.getElementById('edit-mood').value = 
+                entryElement.querySelector('.badge').textContent.trim();
+            editModal.show();
+        });
+    });
+
+    // Save edited entry
+    document.getElementById('save-edit')?.addEventListener('click', async function() {
+        const content = document.getElementById('edit-content').value;
+        const mood = document.getElementById('edit-mood').value;
+
+        try {
+            const response = await fetch(`/gratitude/edit/${currentEntryId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ content, mood })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const entryElement = document.getElementById(`entry-${currentEntryId}`);
+                entryElement.querySelector('.entry-content').textContent = content;
+                entryElement.querySelector('.badge').textContent = mood;
+                if (data.last_modified) {
+                    entryElement.querySelector('.text-muted').textContent = 
+                        `Last modified: ${data.last_modified}`;
+                }
+                editModal.hide();
+            }
+        } catch (error) {
+            console.error('Error updating entry:', error);
+            alert('Failed to update entry');
+        }
+    });
+
+    // Delete entry
+    document.querySelectorAll('.delete-entry').forEach(button => {
+        button.addEventListener('click', async function() {
+            if (confirm('Are you sure you want to delete this entry?')) {
+                const entryId = this.dataset.entryId;
+                try {
+                    const response = await fetch(`/gratitude/delete/${entryId}`, {
+                        method: 'POST'
+                    });
+
+                    if (response.ok) {
+                        document.getElementById(`entry-${entryId}`).remove();
+                    }
+                } catch (error) {
+                    console.error('Error deleting entry:', error);
+                    alert('Failed to delete entry');
+                }
+            }
+        });
+    });
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const breathingVisual = document.getElementById('breathing-visual');
+    const breathingInstruction = document.getElementById('breathing-instruction');
+    const timerDisplay = document.getElementById('timer-display');
+    const durationSelect = document.getElementById('duration-select');
+    const timerProgress = document.getElementById('timer-progress');
+
+    const startBtn = document.getElementById('start-meditation');
+    const pauseBtn = document.getElementById('pause-meditation');
+    const resetBtn = document.getElementById('reset-meditation');
+
+    // Enhanced audio system
+    const audioFiles = {
+        rain: new Audio('/static/meditation/rain.mp3'),
+        waves: new Audio('/static/meditation/ocean.mp3'),
+        bells: new Audio('/static/meditation/bells.mp3'),
+        forest: new Audio('/static/meditation/forest.mp3')
+    };
+
+    // Configure all audio files
+    Object.entries(audioFiles).forEach(([key, audio]) => {
+        audio.loop = true;
+        audio.volume = 0.5;
+        
+        // Add error handling for audio loading
+        audio.addEventListener('error', (e) => {
+            console.error(`Error loading ${key} audio:`, e);
+            alert(`Unable to load ${key} sound. Please check if the audio file exists.`);
+        });
+    });
+
+    let breathingInterval, timer;
+    let timeLeft, totalTime;
+    let isPaused = false;
+    let currentAudio = null;
+
+    // Breathing cycle with more nuanced instructions
+    const breathingCycles = [
+        { instruction: 'Inhale deeply through your nose', duration: 4, type: 'inhale' },
+        { instruction: 'Hold your breath gently', duration: 2, type: 'hold' },
+        { instruction: 'Exhale slowly through your mouth', duration: 4, type: 'exhale' },
+        { instruction: 'Rest and relax', duration: 2, type: 'rest' }
+    ];
+    let currentCycleIndex = 0;
+
+    // Add volume control
+    const volumeControl = document.createElement('div');
+    volumeControl.className = 'mt-3 text-center';
+    volumeControl.innerHTML = `
+        <h5>Volume</h5>
+        <input type="range" class="form-range" min="0" max="100" value="50" id="volume-slider">
+    `;
+    document.querySelector('#meditation-container .row').appendChild(volumeControl);
+
+    // Sound control functions
+    function playSound(soundType) {
+        stopAllSounds();
+        if (soundType === 'none') return;
+        
+        const audio = audioFiles[soundType];
+        if (audio) {
+            // Add promise handling for autoplay restrictions
+            audio.play().catch(error => {
+                console.error('Audio playback failed:', error);
+                if (error.name === 'NotAllowedError') {
+                    alert('Please interact with the page first before playing audio.');
+                } else {
+                    alert('Unable to play audio. Please check your browser settings.');
+                }
+            });
+            currentAudio = audio;
+        }
+    }
+
+    function stopAllSounds() {
+        Object.values(audioFiles).forEach(audio => {
+            try {
+                audio.pause();
+                audio.currentTime = 0;
+            } catch (error) {
+                console.error('Error stopping audio:', error);
+            }
+        });
+        currentAudio = null;
+    }
+
+    function isAudioPlaying() {
+        return currentAudio && !currentAudio.paused;
+    }
+
+    function fadeOutSound(duration = 2000) {
+        if (!currentAudio) return;
+        
+        const audio = currentAudio;
+        const startVolume = audio.volume;
+        const steps = 20;
+        const volumeStep = startVolume / steps;
+        const stepDuration = duration / steps;
+        
+        let currentStep = 0;
+        
+        const fadeInterval = setInterval(() => {
+            currentStep++;
+            if (currentStep >= steps) {
+                clearInterval(fadeInterval);
+                audio.pause();
+                audio.volume = startVolume; // Reset volume for next time
+                return;
+            }
+            audio.volume = startVolume - (volumeStep * currentStep);
+        }, stepDuration);
+    }
+
+    // Event listeners for audio controls
+    document.querySelectorAll('input[name="sound"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            playSound(this.value);
+        });
+    });
+
+    document.getElementById('volume-slider').addEventListener('input', function() {
+        if (currentAudio) {
+            currentAudio.volume = this.value / 100;
+        }
+    });
+
+    function startMeditation() {
+        startBtn.disabled = true;
+        pauseBtn.disabled = false;
+        resetBtn.disabled = false;
+
+        timeLeft = parseInt(durationSelect.value);
+        totalTime = timeLeft;
+        
+        // Get the selected sound value and play it with error handling
+        const selectedSound = document.querySelector('input[name="sound"]:checked').value;
+        if (selectedSound !== 'none') {
+            playSound(selectedSound);
+        }
+        
+        startBreathingCycle();
+        startTimer();
+    }
+
+    function startBreathingCycle() {
+        breathingInterval = setInterval(() => {
+            if (!isPaused) {
+                const currentCycle = breathingCycles[currentCycleIndex];
+                
+                breathingInstruction.textContent = currentCycle.instruction;
+                breathingVisual.className = `${currentCycle.type}`;
+
+                currentCycleIndex = (currentCycleIndex + 1) % breathingCycles.length;
+            }
+        }, 4000);
+    }
+
+    function startTimer() {
+        timer = setInterval(() => {
+            if (!isPaused) {
+                timeLeft--;
+                updateTimerDisplay();
+                updateTimerProgress();
+
+                if (timeLeft <= 0) {
+                    completeMeditation();
+                }
+            }
+        }, 1000);
+    }
+
+    function pauseMeditation() {
+        isPaused = !isPaused;
+        pauseBtn.textContent = isPaused ? 'Resume' : 'Pause';
+        
+        if (currentAudio) {
+            try {
+                if (isPaused) {
+                    currentAudio.pause();
+                } else {
+                    currentAudio.play().catch(error => {
+                        console.error('Error resuming audio:', error);
+                        alert('Unable to resume audio playback.');
+                    });
+                }
+            } catch (error) {
+                console.error('Error handling audio pause/resume:', error);
+            }
+        }
+    }
+
+    function resetMeditation() {
+        clearInterval(breathingInterval);
+        clearInterval(timer);
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        resetBtn.disabled = true;
+        
+        breathingInstruction.textContent = 'Press Start';
+        breathingVisual.className = '';
+        timerDisplay.textContent = '00:00';
+        timerProgress.style.width = '0%';
+        
+        // Fade out and stop sounds
+        fadeOutSound();
+    }
+
+    function completeMeditation() {
+        clearInterval(breathingInterval);
+        clearInterval(timer);
+        fadeOutSound();
+        alert('Meditation session complete! Great job!');
+        resetMeditation();
+    }
+
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerDisplay.textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    function updateTimerProgress() {
+        const progressPercentage = ((totalTime - timeLeft) / totalTime) * 100;
+        timerProgress.style.width = `${progressPercentage}%`;
+    }
+
+    startBtn.addEventListener('click', startMeditation);
+    pauseBtn.addEventListener('click', pauseMeditation);
+    resetBtn.addEventListener('click', resetMeditation);
+});
+
+
+// Add this to your existing JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize charts with more appealing colors and configuration
+    let moodTrendChart, moodDistributionChart;
+    const chartColors = {
+        Happy: '#4CAF50',      // Green
+        Grateful: '#2196F3',   // Blue
+        Blessed: '#9C27B0',    // Purple
+        Content: '#FF9800'     // Orange
+    };
+    
+    // Initialize charts
+    function initCharts() {
+        // Trend Chart Configuration
+        const trendCtx = document.getElementById('moodTrendChart').getContext('2d');
+        moodTrendChart = new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Mood Score',
+                    data: [],
+                    borderColor: '#2196F3',
+                    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#2196F3',
+                    pointRadius: 4,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        titleColor: '#333',
+                        bodyColor: '#333',
+                        borderColor: '#ddd',
+                        borderWidth: 1,
+                        displayColors: true,
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Distribution Chart Configuration
+        const distributionCtx = document.getElementById('moodDistributionChart').getContext('2d');
+        moodDistributionChart = new Chart(distributionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(chartColors),
+                datasets: [{
+                    data: [0, 0, 0, 0], // Initial empty data
+                    backgroundColor: Object.values(chartColors),
+                    borderWidth: 1,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        titleColor: '#333',
+                        bodyColor: '#333',
+                        borderColor: '#ddd',
+                        borderWidth: 1
+                    }
+                }
+            }
+        });
+    }
+    
+    // Fetch and display mood data
+    async function fetchMoodData(period = 'week') {
+        try {
+            // Show loading state
+            showLoadingState();
+            
+            // Fetch data with the specified time period
+            const response = await fetch(`/get_mood_data?period=${period}`);
+            if (!response.ok) throw new Error('Failed to fetch mood data');
+            const data = await response.json();
+            
+            // Update charts and stats
+            updateCharts(data);
+            updateStats(data);
+            
+            // Hide loading state
+            hideLoadingState();
+        } catch (error) {
+            console.error("Error fetching mood data:", error);
+            showError("Failed to load mood data. Please try again.");
+        }
+    }
+    
+    // Update both charts with new data
+    function updateCharts(data) {
+        // Update trend chart
+        moodTrendChart.data.labels = data.labels;
+        moodTrendChart.data.datasets[0].data = data.scores;
+        moodTrendChart.update();
+        
+        // Update distribution chart
+        moodDistributionChart.data.labels = Object.keys(data.counts);
+        moodDistributionChart.data.datasets[0].data = Object.values(data.counts);
+        moodDistributionChart.update();
+    }
+    
+    // Update statistics cards
+    function updateStats(data) {
+        // Find most common mood
+        const moodEntries = Object.entries(data.counts);
+        const mostCommonMood = moodEntries.length > 0 ? 
+            moodEntries.reduce((a, b) => a[1] > b[1] ? a : b)[0] : 'N/A';
+            
+        // Determine mood trend
+        const trendDirection = calculateTrendDirection(data.scores);
+        
+        // Update statistics display
+        document.getElementById('most-common-mood').textContent = mostCommonMood;
+        document.getElementById('mood-trend').textContent = trendDirection;
+        document.getElementById('total-entries').textContent = calculateTotalEntries(data.counts);
+        document.getElementById('current-streak').textContent = `${data.streak || 0} days`;
+    }
+    
+    // Calculate trend direction based on mood scores
+    function calculateTrendDirection(scores) {
+        if (scores.length < 2) return 'Not enough data';
+        
+        const recentScores = scores.slice(-7); // Last 7 entries
+        let improving = 0;
+        let declining = 0;
+        
+        for (let i = 1; i < recentScores.length; i++) {
+            if (recentScores[i] > recentScores[i-1]) improving++;
+            else if (recentScores[i] < recentScores[i-1]) declining++;
+        }
+        
+        if (improving > declining) return 'Improving';
+        else if (declining > improving) return 'Declining';
+        return 'Stable';
+    }
+    
+    // Calculate total number of entries
+    function calculateTotalEntries(counts) {
+        return Object.values(counts).reduce((sum, count) => sum + count, 0);
+    }
+    
+    // Fetch and display AI insights
+    async function fetchMoodInsights() {
+        try {
+            const insightsContainer = document.getElementById('moodInsights');
+            insightsContainer.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <span>Generating insights...</span>
+                </div>
+            `;
+            
+            const response = await fetch('/mood_insights');
+            if (!response.ok) throw new Error('Failed to fetch mood insights');
+            const data = await response.json();
+            
+            // Transform insights into nicer UI elements
+            let insightsHTML = '<div class="list-group list-group-flush">';
+            data.insights.forEach(insight => {
+                insightsHTML += `
+                    <div class="list-group-item border-0 px-0">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="bi bi-lightbulb text-warning fs-4"></i>
+                            </div>
+                            <div>${insight}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            insightsHTML += '</div>';
+            
+            insightsContainer.innerHTML = insightsHTML;
+        } catch (error) {
+            console.error("Error fetching mood insights:", error);
+            document.getElementById('moodInsights').innerHTML = 
+                '<div class="alert alert-warning">Unable to generate insights at this time. Please try again later.</div>';
+        }
+    }
+    
+    // Helper functions for UI state
+    function showLoadingState() {
+        const charts = document.querySelectorAll('.chart-container');
+        charts.forEach(chart => {
+            chart.classList.add('opacity-50');
+        });
+        // Could add spinners here if needed
+    }
+    
+    function hideLoadingState() {
+        const charts = document.querySelectorAll('.chart-container');
+        charts.forEach(chart => {
+            chart.classList.remove('opacity-50');
+        });
+    }
+    
+    function showError(message) {
+        // Create a toast or notification
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+        alertDiv.role = 'alert';
+        alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        
+        // Insert at the top of the container
+        const container = document.querySelector('#mood_tracker .container');
+        container.insertBefore(alertDiv, container.firstChild);
+    }
+    
+    // Handle time period selection
+    document.querySelectorAll('.time-period-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active button
+            document.querySelectorAll('.time-period-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Toggle custom date range visibility
+            const customRange = document.getElementById('custom-date-range');
+            if (this.dataset.period === 'custom') {
+                customRange.style.display = 'block';
+            } else {
+                customRange.style.display = 'none';
+                // Fetch data for the selected period
+                fetchMoodData(this.dataset.period);
+            }
+        });
+    });
+    
+    // Handle custom date range
+    document.getElementById('apply-custom-range').addEventListener('click', function() {
+        const startDate = document.getElementById('custom-start-date').value;
+        const endDate = document.getElementById('custom-end-date').value;
+        
+        if (!startDate || !endDate) {
+            alert('Please select both start and end dates');
+            return;
+        }
+        
+        fetchMoodData(`custom&start=${startDate}&end=${endDate}`);
+    });
+    
+    // Set today as the default end date and 7 days ago as the default start date
+    function setDefaultDateRange() {
+        const today = new Date();
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(today.getDate() - 7);
+        
+        document.getElementById('custom-end-date').value = formatDate(today);
+        document.getElementById('custom-start-date').value = formatDate(oneWeekAgo);
+    }
+    
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+    
+    // Handle mood logging
+    document.getElementById('save-mood').addEventListener('click', async function() {
+        const moodForm = document.getElementById('log-mood-form');
+        const selectedMood = moodForm.querySelector('input[name="mood"]:checked');
+        const notes = document.getElementById('mood-notes').value;
+        
+        if (!selectedMood) {
+            alert('Please select your mood');
+            return;
+        }
+        
+        try {
+            const response = await fetch('/log_mood', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    mood: selectedMood.value,
+                    notes: notes
+                })
+            });
+            
+            if (!response.ok) throw new Error('Failed to log mood');
+            
+            // Close the modal and refresh the data
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addMoodModal'));
+            modal.hide();
+            
+            // Reset the form
+            moodForm.reset();
+            
+            // Refresh the data with the current active period
+            const activePeriod = document.querySelector('.time-period-btn.active').dataset.period;
+            fetchMoodData(activePeriod);
+            
+            // Show success message
+            showSuccess('Mood logged successfully!');
+        } catch (error) {
+            console.error('Error logging mood:', error);
+            showError('Failed to log mood. Please try again.');
+        }
+    });
+    
+    // Style the mood selector
+    function setupMoodSelector() {
+        const moodOptions = document.querySelectorAll('.mood-option label');
+        moodOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove active class from all options
+                moodOptions.forEach(opt => opt.classList.remove('bg-light'));
+                // Add active class to the selected option
+                this.classList.add('bg-light');
+            });
+        });
+    }
+    
+    // Handle download report button
+    document.getElementById('downloadMoodReport').addEventListener('click', function() {
+        // This would typically generate a PDF or CSV report
+        alert('Download feature will be implemented in a future update.');
+    });
+    
+    // Handle refresh insights button
+    document.getElementById('refreshInsights').addEventListener('click', fetchMoodInsights);
+    
+    function showSuccess(message) {
+        // Create a toast or notification for success
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-success alert-dismissible fade show';
+        alertDiv.role = 'alert';
+        alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        
+        // Insert at the top of the container
+        const container = document.querySelector('#mood_tracker .container');
+        container.insertBefore(alertDiv, container.firstChild);
+        
+        // Auto-dismiss after 3 seconds
+        setTimeout(() => {
+            alertDiv.classList.remove('show');
+            setTimeout(() => alertDiv.remove(), 300);
+        }, 3000);
+    }
+    
+    // Additional CSS for the mood selector
+    function addMoodSelectorStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .mood-option label {
+                cursor: pointer;
+                transition: all 0.2s ease;
+                border: 2px solid transparent;
+            }
+            
+            .mood-option label:hover {
+                background-color: rgba(0,0,0,0.05);
+                transform: translateY(-3px);
+            }
+            
+            .mood-option input:checked + label {
+                background-color: #f8f9fa;
+                border-color: #dee2e6;
+                transform: translateY(-3px);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            
+            .mood-selector {
+                gap: 0.5rem;
+            }
+            
+            @media (max-width: 576px) {
+                .mood-selector {
+                    flex-wrap: wrap;
+                }
+                
+                .mood-option {
+                    flex: 0 0 calc(50% - 0.5rem);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Initialize everything when the tab is shown
+    const moodTrackerTab = document.getElementById('mood_tracker-tab');
+    moodTrackerTab.addEventListener('shown.bs.tab', function(e) {
+        if (!moodTrendChart) {
+            initCharts();
+            setDefaultDateRange();
+            setupMoodSelector();
+            addMoodSelectorStyles();
+            fetchMoodData('week');
+            fetchMoodInsights();
+        }
+    });
+    
+    // Also initialize if it's the active tab on page load
+    if (document.querySelector('#mood_tracker.active')) {
+        initCharts();
+        setDefaultDateRange();
+        setupMoodSelector();
+        addMoodSelectorStyles();
+        fetchMoodData('week');
+        fetchMoodInsights();
+    }
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+import React, { useState } from 'react';
+import { 
+  Home, 
+  MessageSquare, 
+  Video, 
+  BarChart2, 
+  Heart, 
+  Timer,
+  History,
+  LogOut,
+  Menu,
+  X,
+  User
+} from 'lucide-react';
+
+const Dashboard = () => {
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState('profile');
+
+  const navItems = [
+    { id: 'profile', label: 'Profile', icon: <User size={20} /> },
+    { id: 'mindchat', label: 'MindChat', icon: <MessageSquare size={20} /> },
+    { id: 'videos', label: 'Video Library', icon: <Video size={20} /> },
+    { id: 'analyzer', label: 'Mood Analyzer', icon: <BarChart2 size={20} /> },
+    { id: 'gratitude', label: 'Gratitude Journal', icon: <Heart size={20} /> },
+    { id: 'meditation', label: 'Meditation Guide', icon: <Timer size={20} /> },
+    { id: 'moodhistory', label: 'Mood History', icon: <History size={20} /> },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <div className={`fixed top-0 left-0 h-full bg-white shadow-lg transition-all duration-300 ${isSidebarOpen ? 'w-64' : 'w-20'}`}>
+        <div className="flex items-center justify-between p-4 border-b">
+          <h1 className={`text-xl font-bold text-blue-600 transition-opacity duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0'}`}>
+            MindCare
+          </h1>
+          <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="p-2 rounded-lg hover:bg-gray-100">
+            {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+
+        <nav className="p-4">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              className={`w-full flex items-center p-3 mb-2 rounded-lg transition-colors ${
+                activeTab === item.id 
+                  ? 'bg-blue-50 text-blue-600' 
+                  : 'hover:bg-gray-100'
+              }`}
+            >
+              {item.icon}
+              <span className={`ml-3 transition-opacity duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0'}`}>
+                {item.label}
+              </span>
+            </button>
+          ))}
+
+          <button className="w-full flex items-center p-3 mt-8 text-red-600 rounded-lg hover:bg-red-50">
+            <LogOut size={20} />
+            <span className={`ml-3 transition-opacity duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0'}`}>
+              Logout
+            </span>
+          </button>
+        </nav>
+      </div>
+
+      {/* Main Content */}
+      <div className={`transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-20'}`}>
+        <div className="p-8">
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold text-gray-800">
+                {navItems.find(item => item.id === activeTab)?.label}
+              </h2>
+              <div className="flex items-center space-x-4">
+                <div className="text-right">
+                  <p className="text-sm font-medium text-gray-900">Welcome back,</p>
+                  <p className="text-sm text-gray-500">John Doe</p>
+                </div>
+                <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                  <User size={20} className="text-blue-600" />
+                </div>
+              </div>
+            </div>
+
+            {/* Content area - you would replace this with your tab content */}
+            <div className="bg-gray-50 rounded-lg p-6 min-h-[600px]">
+              {/* Your existing tab content would go here */}
+              <p className="text-gray-600">Content for {activeTab} tab</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
